@@ -21,13 +21,21 @@ public class SocialMediaController {
      * suite must receive a Javalin object from this method.
      * @return a Javalin app object which defines the behavior of the Javalin controller.
      */
+
+    AccountService accountService;
+
+
+    public SocialMediaController(){
+        this.accountService = new AccountService();
+    }
+
+
+
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.get("example-endpoint", this::exampleHandler);
         app.post("localhost:8080/register", this::registerHandler);
 
-
-        //POST localhost:8080/register
         return app;
     }
 
@@ -41,8 +49,8 @@ public class SocialMediaController {
 
     private void registerHandler(Context context) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        //Account account = mapper.readValue(context.body(), Account.class);
-        Account addedAccount = acountService.addAccount(account);
+        Account account = mapper.readValue(context.body(), Account.class);
+        Account addedAccount = accountService.addAccount(account);
         if(addedAccount!=null){
             context.json(mapper.writeValueAsString(addedAccount));
         }else{
