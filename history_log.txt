@@ -1,7 +1,7 @@
-commit 7a321a4592a25742d7365eedf32041e9e2d8ad69
+commit 0a2aa4b2506b0e946dd074039871377e8976771f
 Author: ZackeryJBrown <zackeryjbrown@gmail.com>
-Date:   Thu Feb 2 20:51:25 2023 +0000
+Date:   Sat Feb 4 22:48:07 2023 +0000
 
-    Account services setup
+    Account changes
 
- 7 files changed, 138 insertions(+), 249 deletions(-)
+ 2 files changed, 33 insertions(+), 31 deletions(-)

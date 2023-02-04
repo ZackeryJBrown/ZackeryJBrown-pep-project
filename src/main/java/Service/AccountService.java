@@ -39,24 +39,46 @@ public class AccountService {
         try {
             if ( (account.username == null) || (account.username == "") || (account.password.length() <= 3)){ 
                 
-                Account dbUsername = accountDAO.getAccountByUsername(account.username);
+                Account dbUsername = accountDAO.getAccountByUsername(account.getUsername());
                 
                 if (dbUsername != null){
                     System.out.println("Error 400: Username already created");
+                    return null;
                 }
 
             System.out.println("Error 400: invalid input");
+            return null;
             }
             
         } catch (HttpResponseException e) {
-            //This should be returning an HTTTP 100-500 series code depending on try block errors
-            e.getMessage();
+            //user readable response
             System.out.println("Error code: "+e.getStatus());
-
+            System.out.println(e.getMessage());
         }
 
         return accountDAO.insertAccount(account);
     };
 
+    /**
+     * logs in an account after checking login credentials
+     * @param account the account provided to attempt login
+     * @return returns the individual account including id if the username and password match
+     */
+    public Account loginAccount(Account account){
+        try {
+            Account checkedAccount = accountDAO.loginAccount(account);
+
+            if ( (checkedAccount.getUsername()!=account.getUsername()) || (checkedAccount.getPassword()!=account.getPassword()) ){
+                System.out.println("Username or Password not matching. Login Failed.");
+                return null;
+            }
+        } catch (HttpResponseException e) {
+            //user readable response
+            System.out.println("Error code: "+e.getStatus());
+            System.out.println(e.getMessage());
+        }
+        return accountDAO.loginAccount(account);
+    }
+    
 
 }

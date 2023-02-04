@@ -12,6 +12,6 @@ public class Main {
         app.start(8080);
 
         
-        System.out.println("test");
+        System.out.println("Test app started");
     }
 }
