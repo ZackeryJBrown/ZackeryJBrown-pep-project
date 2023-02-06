@@ -1,7 +1,7 @@
-commit 3a12594bac2f1e181f82bc0f1664a194abacd92c
+commit 3c9de12259bf519efbecfe6f1f476a78d1db343f
 Author: ZackeryJBrown <zackeryjbrown@gmail.com>
-Date:   Sat Feb 4 22:49:21 2023 +0000
+Date:   Mon Feb 6 00:12:41 2023 +0000
 
-    acct changes
+    endpoint testing
 
- 6 files changed, 175 insertions(+), 183 deletions(-)
+ 4 files changed, 38 insertions(+), 33 deletions(-)
