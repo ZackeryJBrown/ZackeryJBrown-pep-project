@@ -75,8 +75,8 @@ public class AccountDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             
-            preparedStatement.setString(2, account.getUsername());
-            preparedStatement.setString(3, account.getPassword());
+            preparedStatement.setString(1, account.getUsername());
+            preparedStatement.setString(2, account.getPassword());
             
 
             preparedStatement.executeUpdate();

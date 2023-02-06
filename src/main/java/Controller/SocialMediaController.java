@@ -36,7 +36,8 @@ public class SocialMediaController {
         app.get("example-endpoint", this::exampleHandler);
         app.post("register", this::registerHandler);
         app.post("login", this::loginHandler);
-
+        app.get("myExampleEndpoint", this::myExampleHandler);
+        //TODO get working but not posts, fix issue
 
 
         return app;
@@ -48,6 +49,10 @@ public class SocialMediaController {
      */
     private void exampleHandler(Context context) {
         context.json("sample text");
+    }
+
+    private void myExampleHandler(Context context) {
+        context.json("new sample text");
     }
 
 

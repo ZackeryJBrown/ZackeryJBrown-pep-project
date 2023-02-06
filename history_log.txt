@@ -1,7 +1,7 @@
-commit 0a2aa4b2506b0e946dd074039871377e8976771f
+commit 3a12594bac2f1e181f82bc0f1664a194abacd92c
 Author: ZackeryJBrown <zackeryjbrown@gmail.com>
-Date:   Sat Feb 4 22:48:07 2023 +0000
+Date:   Sat Feb 4 22:49:21 2023 +0000
 
-    Account changes
+    acct changes
 
- 2 files changed, 33 insertions(+), 31 deletions(-)
+ 6 files changed, 175 insertions(+), 183 deletions(-)
