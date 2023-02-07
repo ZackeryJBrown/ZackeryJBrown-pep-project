@@ -37,15 +37,16 @@ public class AccountDAO {
 
 
     /**
-     * Gets the account by account_id
-     * @return returns the account id
+     * Gets the account username and password by provided username
+     * 
+     * @return returns rows matching a username as an Account object
      */
     public Account getAccountByUsername(String username){
 
         Connection connection = ConnectionUtil.getConnection();
-       
+               
         try{
-            String sql = "SELECT * FROM account WHERE username = ?;";
+            String sql = "SELECT username, password FROM account WHERE username = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
             preparedStatement.setString(1, username);
@@ -53,10 +54,8 @@ public class AccountDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()){
-                Account individualAccount = new Account(rs.getInt("account_id"),
-                                                        rs.getString("username"),
-                                                        rs.getString("password"));
-                return individualAccount;
+                return new Account(rs.getString("username"), rs.getString("password"));
+                
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -72,7 +71,7 @@ public class AccountDAO {
         
 
         try {
-            String sql = "INSERT INTO account (username, password) VALUES (?,?)" ;
+            String sql = "INSERT INTO account (username, password) VALUES (?,?);" ;
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, account.getUsername());
@@ -97,22 +96,27 @@ public class AccountDAO {
         
 
         try {
-            String sql = "SELECT account_id, username, password FROM account WHERE username = ? & password = ?;";
+            String sql = "SELECT user_id, username, password FROM account WHERE username = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
             preparedStatement.setString(1, account.getUsername());
-            preparedStatement.setString(2, account.getPassword());
-            if(account.getUsername()!= null && account.getUsername()!="" && account.getPassword()!=null && account.getPassword()!=""){
+            //preparedStatement.setString(2, account.getPassword());
+            
+            
                 ResultSet rs = preparedStatement.executeQuery();
+                //ResultSet pkeyResultSet = preparedStatement.getGeneratedKeys();
+                
                 while(rs.next()){
-                    Account individualAccount = new Account(rs.getInt("account_id"),
-                                                            rs.getString("username"),
-                                                            rs.getString("password"));
-                    return individualAccount;
+                    //Account individualAccount = new Account(rs.getInt("account_id"),
+                    //                                        rs.getString("username"),
+                    //                                        rs.getString("password"));
+
+                    return new Account(account.getAccount_id(), account.getUsername(), account.getPassword());
+                    
                 }
-            }else{
-                return null;
-            }
+            
+            return null;
+            
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());

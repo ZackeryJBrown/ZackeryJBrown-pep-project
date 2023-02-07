@@ -1,7 +1,7 @@
-commit 7dd55d4fee70e045692514ea9cbbc987eb9368f2
+commit 9891c30299cf97999680e0f2b4d19ba8f1a59d12
 Author: ZackeryJBrown <zackeryjbrown@gmail.com>
-Date:   Mon Feb 6 00:13:34 2023 +0000
+Date:   Tue Feb 7 00:02:16 2023 +0000
 
-    endpoint testing
+    Account Creation Working
 
- 2 files changed, 93 insertions(+), 176 deletions(-)
+ 6 files changed, 80 insertions(+), 56 deletions(-)

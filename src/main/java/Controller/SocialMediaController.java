@@ -87,8 +87,10 @@ public class SocialMediaController {
         if(loggedInAccount!=null){
             context.json(mapper.writeValueAsString(loggedInAccount));
             context.status(200);
+            context.json("200: Login Successful");
         }else{
             context.status(401);
+            context.json("401 bad request");
         }
     }
 

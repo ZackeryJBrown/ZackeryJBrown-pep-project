@@ -5,6 +5,8 @@ import io.javalin.http.Context;
 import io.javalin.http.HttpResponseException;
 import DAO.AccountDAO;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Objects;
 
 import org.h2.api.ErrorCode;
 
@@ -38,7 +40,11 @@ public class AccountService {
 
         //COMPLETE: logic to check if input was valid, as per use of a service class
         try {
-            if ( (account.getUsername() == null) || (account.getUsername() == "") || (account.password.length() <= 3) || (account.getPassword()=="") || (account.getPassword()==null)){ 
+            if ((account.getUsername() == null) ||
+                (account.getUsername() == "") ||
+                (account.password.length() <= 3) ||
+                (account.getPassword()=="") ||
+                (account.getPassword()==null)){ 
                 
                 Account dbUsername = accountDAO.getAccountByUsername(account.getUsername());
                 
@@ -68,17 +74,26 @@ public class AccountService {
 
             if ((account.getUsername() == null) || (account.getPassword() == null) || (account.getUsername() == "") || (account.password == "")){
                 System.out.println("Username or Password not provided");
+                
+                
+                Account checkedAccount = accountDAO.getAccountByUsername(account.getUsername());
+                String[] providedAccount = {account.getUsername().trim(), account.getPassword().trim()};
+                String[] accountCheckedAgainst = {checkedAccount.getUsername(), checkedAccount.getPassword()};
+
+                //returns 0 if matching
+                int usrCompare = providedAccount[0].compareTo(accountCheckedAgainst[0]);
+                int pswdCompare = providedAccount[1].compareTo(accountCheckedAgainst[1]);
+                               
+
+                            if (usrCompare != 0 || pswdCompare != 0){
+                            //if ( !(account.getUsername().equals(checkedAccount.getUsername())) || !(account.getPassword().equals(checkedAccount.getPassword()))){
+                            //if ( (checkedAccount.getUsername()) != (account.getUsername()) || ((checkedAccount.getPassword()) != (account.getPassword())) ){
+                                System.out.println("Username or Password not matching. Login Failed.");
+                                return null;
+                            }
                 return null;
             }
-
-            Account checkedAccount = accountDAO.loginAccount(account);
-
-            if ( (checkedAccount.getUsername()!=account.getUsername()) || (checkedAccount.getPassword()!=account.getPassword()) ){
-                System.out.println("Username or Password not matching. Login Failed.");
-                return null;
-
-            }
-
+            return null;
 
            
         } catch (HttpResponseException e) {
