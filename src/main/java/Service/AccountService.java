@@ -1,6 +1,7 @@
 package Service;
 
 import Model.Account;
+import io.javalin.http.Context;
 import io.javalin.http.HttpResponseException;
 import DAO.AccountDAO;
 import java.util.List;
@@ -37,7 +38,7 @@ public class AccountService {
 
         //COMPLETE: logic to check if input was valid, as per use of a service class
         try {
-            if ( (account.username == null) || (account.username == "") || (account.password.length() <= 3)){ 
+            if ( (account.getUsername() == null) || (account.getUsername() == "") || (account.password.length() <= 3) || (account.getPassword()=="") || (account.getPassword()==null)){ 
                 
                 Account dbUsername = accountDAO.getAccountByUsername(account.getUsername());
                 
@@ -45,8 +46,6 @@ public class AccountService {
                     System.out.println("Error 400: Username already created");
                     return null;
                 }
-
-            System.out.println("Error 400: invalid input");
             return null;
             }
             
@@ -66,12 +65,22 @@ public class AccountService {
      */
     public Account loginAccount(Account account){
         try {
+
+            if ((account.getUsername() == null) || (account.getPassword() == null) || (account.getUsername() == "") || (account.password == "")){
+                System.out.println("Username or Password not provided");
+                return null;
+            }
+
             Account checkedAccount = accountDAO.loginAccount(account);
 
             if ( (checkedAccount.getUsername()!=account.getUsername()) || (checkedAccount.getPassword()!=account.getPassword()) ){
                 System.out.println("Username or Password not matching. Login Failed.");
                 return null;
+
             }
+
+
+           
         } catch (HttpResponseException e) {
             //user readable response
             System.out.println("Error code: "+e.getStatus());
