@@ -27,10 +27,11 @@ public class SocialMediaController {
      */
 
     AccountService accountService;
-
+    MessageService messageService;
 
     public SocialMediaController(){
         this.accountService = new AccountService();
+        this.messageService = new MessageService();
     }
 
 
@@ -38,11 +39,15 @@ public class SocialMediaController {
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.get("example-endpoint", this::exampleHandler);
+        //account endpoints
         app.post("register", this::registerHandler);
         app.post("login", this::loginHandler);
-        app.get("myExampleEndpoint", this::myExampleHandler);
-        //TODO get working but not posts, fix issue
-
+        //message endpoints
+        app.post("messages", this::postMessageHandler);
+        app.get("messages", this::getMessageHandler);
+        app.get("messages/{message_id}", this::getMessageByIdHandler)
+        //GET localhost:8080/messages/{message_id}
+        
 
         return app;
     }
@@ -55,21 +60,16 @@ public class SocialMediaController {
         context.json("sample text");
     }
 
-    private void myExampleHandler(Context context) {
-        context.json("new sample text");
-    }
 
+    //account handlers below
 
     private void registerHandler(Context context) throws JsonProcessingException {
         
         ObjectMapper mapper = new ObjectMapper();
         Account account = mapper.readValue(context.body(), Account.class);
-        //if(account.equals(null) || account.getUsername() == "" || account.getPassword() == "" || account.getUsername()==null || account.getPassword()==null){
-        //    context.status(400);
-        //}
         Account addedAccount = accountService.addAccount(account);
         
-        if(addedAccount!=null){
+        if(addedAccount != null){
             context.json(mapper.writeValueAsString(addedAccount));
             context.status(200);
         }else{
@@ -84,15 +84,42 @@ public class SocialMediaController {
         Account loggedInAccount = accountService.loginAccount(account);
         
 
-        if(loggedInAccount!=null){
+        if(loggedInAccount != null){
             context.json(mapper.writeValueAsString(loggedInAccount));
             context.status(200);
-            context.json("200: Login Successful");
         }else{
             context.status(401);
-            context.json("401 bad request");
         }
     }
+
+    //message handlers below
+
+    private void postMessageHandler(Context context) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = mapper.readValue(context.body(), Message.class);
+        Message postedMessage = messageService.postMessage(message);
+           
+        if(postedMessage != null){
+            context.json(mapper.writeValueAsString(postedMessage));
+            context.status(200);
+        }else{
+            context.status(400);
+        }
+    }
+    
+    private void getMessageHandler(Context context) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Message> messagesList = messageService.getAllMessages();
+
+        context.json(mapper.writeValueAsString(messagesList));
+        context.status(200);
+    }
+
+    private void getMessageByIdHandler(Context context) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Message messageById = messageService.getMessageById();
+    }
+
 
 
 }

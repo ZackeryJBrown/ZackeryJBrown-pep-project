@@ -54,9 +54,9 @@ public class AccountDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()){
-                return new Account(rs.getString("username"), rs.getString("password"));
-                
+                return new Account(rs.getString("username"), rs.getString("password"));   
             }
+
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
@@ -96,27 +96,17 @@ public class AccountDAO {
         
 
         try {
-            String sql = "SELECT user_id, username, password FROM account WHERE username = ?;";
+            String sql = "SELECT user_id, username, password FROM account WHERE username = ? & password = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
             preparedStatement.setString(1, account.getUsername());
-            //preparedStatement.setString(2, account.getPassword());
+            preparedStatement.setString(2, account.getPassword());
             
-            
-                ResultSet rs = preparedStatement.executeQuery();
-                //ResultSet pkeyResultSet = preparedStatement.getGeneratedKeys();
+            ResultSet rs = preparedStatement.executeQuery();
                 
-                while(rs.next()){
-                    //Account individualAccount = new Account(rs.getInt("account_id"),
-                    //                                        rs.getString("username"),
-                    //                                        rs.getString("password"));
-
-                    return new Account(account.getAccount_id(), account.getUsername(), account.getPassword());
-                    
-                }
-            
-            return null;
-            
+            while(rs.next()){
+                return new Account(rs.getInt("account_id"), rs.getString("username"), rs.getString("password"));                 
+            }
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());

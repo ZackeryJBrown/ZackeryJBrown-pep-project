@@ -1,20 +1,16 @@
 package Service;
 
 import Model.Account;
+import DAO.AccountDAO;
 import io.javalin.http.Context;
 import io.javalin.http.HttpResponseException;
-import DAO.AccountDAO;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import org.h2.api.ErrorCode;
 
-    /**Features complete:
-     *@getAllAccounts
-     *@addAccount
-     */
-
+    
 public class AccountService {
     private AccountDAO accountDAO;
 
@@ -72,7 +68,7 @@ public class AccountService {
     public Account loginAccount(Account account){
         try {
 
-            if ((account.getUsername() == null) || (account.getPassword() == null) || (account.getUsername() == "") || (account.password == "")){
+            if ((account.getUsername() == null) || (account.getPassword() == null) || (account.getUsername() == "") || (account.getPassword() == "")){
                 System.out.println("Username or Password not provided");
                 
                 
@@ -86,8 +82,6 @@ public class AccountService {
                                
 
                             if (usrCompare != 0 || pswdCompare != 0){
-                            //if ( !(account.getUsername().equals(checkedAccount.getUsername())) || !(account.getPassword().equals(checkedAccount.getPassword()))){
-                            //if ( (checkedAccount.getUsername()) != (account.getUsername()) || ((checkedAccount.getPassword()) != (account.getPassword())) ){
                                 System.out.println("Username or Password not matching. Login Failed.");
                                 return null;
                             }

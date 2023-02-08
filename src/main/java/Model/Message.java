@@ -56,6 +56,8 @@ public class Message {
         this.message_text = message_text;
         this.time_posted_epoch = time_posted_epoch;
     }
+
+
     /**
      * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
      * @return message_id
