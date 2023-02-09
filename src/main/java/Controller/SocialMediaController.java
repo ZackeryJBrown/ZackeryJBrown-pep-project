@@ -9,6 +9,7 @@ import Model.Message;
 import Service.AccountService;
 import Service.MessageService;
 
+import java.net.URL;
 import java.net.http.HttpResponse;
 import java.util.List;
 
@@ -45,9 +46,11 @@ public class SocialMediaController {
         //message endpoints
         app.post("messages", this::postMessageHandler);
         app.get("messages", this::getMessageHandler);
-        app.get("messages/{message_id}", this::getMessageByIdHandler)
-        //GET localhost:8080/messages/{message_id}
-        
+        app.get("messages/{message_id}", this::getMessageByIdHandler);
+        //TODO create handlers etc
+        app.delete("messages/{message_id}", this::deleteMessageHandler);
+        app.patch("messages/{message_id}", this::editMessageHandler);
+        //app.get("accounts/{account_id}/messages" this::getAllMessagesByUserHandler);
 
         return app;
     }
@@ -117,9 +120,44 @@ public class SocialMediaController {
 
     private void getMessageByIdHandler(Context context) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        Message messageById = messageService.getMessageById();
+        int message_id = mapper.readValue(context.pathParam("message_id"), Integer.class);
+        Message messageById = messageService.getMessageById(message_id);
+
+        
+        context.json(mapper.writeValueAsString(messageById));
+        context.status(200);
+        
     }
 
+
+    private void deleteMessageHandler(Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        int message_id = mapper.readValue(context.pathParam("message_id"), Integer.class);
+        List<Message> deletedMessage = messageService.deleteMessage(message_id);
+
+        context.json(mapper.writeValueAsString(deletedMessage));
+        context.status(200);
+
+    }
+
+    private void editMessageHandler(Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        int message_id = mapper.readValue(context.pathParam("message_id"), Integer.class);
+        Message editedMessage = messageService.editMessage(message_id);
+
+        if(editedMessage != null){
+            context.json(mapper.writeValueAsString(editedMessage));
+            context.status(200);
+        }else{
+            context.status(400);
+        }
+
+    }
+
+    private void getAllMessagesByUserHandler(Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        int message_id = mapper.readValue(context.pathParam("message_id"), Integer.class);
+        }
 
 
 }

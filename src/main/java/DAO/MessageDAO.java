@@ -2,6 +2,7 @@ package DAO;
 
 import Model.Message;
 import Util.ConnectionUtil;
+import net.bytebuddy.dynamic.scaffold.MethodRegistry.Prepared;
 
 import java.net.http.HttpRequest;
 import java.sql.*;
@@ -74,9 +75,9 @@ public class MessageDAO {
 
            while(rs.next()){
             Message message = new Message(rs.getInt("message_id"),
-                                        rs.getInt("posted_by"),
-                                        rs.getString("message_text"),
-                                        rs.getLong("time_posted_epoch")
+                                            rs.getInt("posted_by"),
+                                            rs.getString("message_text"),
+                                            rs.getLong("time_posted_epoch")
                                         );
             messages.add(message);
            }
@@ -87,9 +88,75 @@ public class MessageDAO {
         return messages;
     }
 
-    public Message getMessageById(int message_id){
+    public Message getMessageById(Integer message_id){
+        Connection connection = ConnectionUtil.getConnection();
+
         //TODO write to get by message id
+        try{
+            String sql = "SELECT * FROM messages WHERE message_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, message_id);
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){
+                return new Message(rs.getInt("message_id"),
+                                    rs.getInt("posted_by"),
+                                    rs.getString("message_text"),
+                                    rs.getLong("time_posted_epoch")
+                );
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+
         return null;
     }
+
+
+    public List<Message> deleteMessage(Integer message_id){
+        Connection connection = ConnectionUtil.getConnection();
+        List<Message> returnedMessage = new ArrayList<>();
+        try{
+            //prepares to return message that will be deleted
+            String returnedSql = "SELECT * FROM messages WHERE message_id = ?;";
+            PreparedStatement returnedStatement = connection.prepareStatement(returnedSql);
+
+            ResultSet rs = returnedStatement.executeQuery();
+            while(rs.next()){
+                Message message = new Message(rs.getInt("message_id"),
+                                                rs.getInt("posted_by"),
+                                                rs.getString("message_text"),
+                                                rs.getLong("time_posted_epoch")
+                                            );
+                returnedMessage.add(message);
+                }
+
+            //deletes message
+            String sql = "DELETE FROM messages WHERE message_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, message_id);
+            preparedStatement.executeQuery();        
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return returnedMessage;
+    }
+
+
+    public Message editMessage(Integer message_id){
+        Connection connection = ConnectionUtil.getConnection();
+
+        try{
+            String sql = ";";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            //TODO continue action
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+
 
 }
