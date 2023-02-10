@@ -35,10 +35,10 @@ public class AccountService {
     public Account addAccount(Account account){
 
         //COMPLETE: logic to check if input was valid, as per use of a service class
-        
+            int passLength = account.getPassword().length();
             if ((account.getUsername() == null) ||
                 (account.getUsername() == "") ||
-                (account.password.length() <= 3) ||
+                (passLength <= 3) ||
                 (account.getPassword()=="") ||
                 (account.getPassword()==null)){ 
                 
@@ -48,8 +48,8 @@ public class AccountService {
                     System.out.println("Error 400: Username already created");
                     return null;
                 }
+                return null;
             }
-            return null;       
         
         return accountDAO.insertAccount(account);
     }
@@ -60,36 +60,33 @@ public class AccountService {
      * @return returns the individual account including id if the username and password match
      */
     public Account loginAccount(Account account){
-        try {
+        
 
-            if ((account.getUsername() == null) || (account.getPassword() == null) || (account.getUsername() == "") || (account.getPassword() == "")){
-                System.out.println("Username or Password not provided");
-                
-                
-                Account checkedAccount = accountDAO.getAccountByUsername(account.getUsername());
-                String[] providedAccount = {account.getUsername().trim(), account.getPassword().trim()};
-                String[] accountCheckedAgainst = {checkedAccount.getUsername(), checkedAccount.getPassword()};
-
-                //returns 0 if matching
-                int usrCompare = providedAccount[0].compareTo(accountCheckedAgainst[0]);
-                int pswdCompare = providedAccount[1].compareTo(accountCheckedAgainst[1]);
-                               
-
-                            if (usrCompare != 0 || pswdCompare != 0){
-                                System.out.println("Username or Password not matching. Login Failed.");
-                                return null;
-                            }
+            if ((account.getUsername()=="") ||
+                (account.getUsername().isBlank()) ||
+                (account.getUsername()==null) ||
+                (account.getPassword()=="") ||
+                (account.getPassword().isBlank()) ||
+                (account.getPassword()==null)
+                ){              
                 return null;
             }
-            return null;
+            Account checkedAccount = accountDAO.getAccountByUsername(account.getUsername());
+            String[] providedAccount = {account.getUsername().trim(), account.getPassword().trim()};
+            String[] accountCheckedAgainst = {checkedAccount.getUsername(), checkedAccount.getPassword()};
 
-           
-        } catch (HttpResponseException e) {
-            //user readable response
-            System.out.println("Error code: "+e.getStatus());
-            System.out.println(e.getMessage());
-        }
-        return accountDAO.loginAccount(account);
+            //returns 0 if matching
+            int usrCompare = providedAccount[0].compareTo(accountCheckedAgainst[0]);
+            int pswdCompare = providedAccount[1].compareTo(accountCheckedAgainst[1]);
+                               
+            //if password or username are not matching, return null
+            if (usrCompare != 0 || pswdCompare != 0){
+                System.out.println("Username or Password not matching. Login Failed.");
+                return null;
+            }
+            
+        
+        return null;
     }
     
 

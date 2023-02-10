@@ -96,7 +96,7 @@ public class AccountDAO {
         
 
         try {
-            String sql = "SELECT user_id, username, password FROM account WHERE username = ? & password = ?;";
+            String sql = "SELECT account_id, username, password FROM account WHERE username = ? & password = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
             preparedStatement.setString(1, account.getUsername());
@@ -104,8 +104,10 @@ public class AccountDAO {
             
             ResultSet rs = preparedStatement.executeQuery();
                 
-            while(rs.next()){
-                return new Account(rs.getInt("account_id"), rs.getString("username"), rs.getString("password"));                 
+            if(rs.next()){
+                return new Account(rs.getInt("account_id"),
+                                    rs.getString("username"),
+                                    rs.getString("password"));                 
             }
             
         } catch (SQLException e) {
