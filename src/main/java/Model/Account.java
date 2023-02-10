@@ -33,7 +33,10 @@ public class Account {
      * @param password
      */
     public Account(String username, String password){
-
+        this.username = username;
+        this.password = password;
+        //this.setUsername(username);
+        //this.setPassword(password);
     }
     /**
      * Whem retrieving an Account from the database, all fields will be needed. In that case, a constructor with all

@@ -29,24 +29,35 @@ public class Main {
         
         System.out.println("Test app started");
 
-                String[] providedAccount = {"username", "password"};
-                String[] accountCheckedAgainst = {"username", "password"};
-
-                //returns 0 if matching
-                int usrCompare = providedAccount[0].compareTo(accountCheckedAgainst[0]);
-                int pswdCompare = providedAccount[1].compareTo(accountCheckedAgainst[1]);
-
-                System.out.println(usrCompare);
-
-                System.out.println(pswdCompare);
-
-
-
                 
 
+            Account testInput = new Account("user", "password");
+            Account testDb = new Account("user", "password");
+            //testInput.setUsername("user");
+            //testDb.setUsername("user");
+
+            System.out.println(testInput);
+
+            String accPass = testInput.getPassword();
+            String accUsr = testInput.getUsername();
+            String dbUsr = testDb.getUsername();
+            String dbPass = testDb.getPassword();
+            String[] providedAccount = {accUsr, accPass};
+            String[] accountCheckedAgainst = {dbUsr, dbPass};
 
 
+            //returns 0 if matching
+            //int usrCompare = accUsr.compareTo(dbUsr);
+           // if (accUsr.equals(dbUsr)){
+            //    System.out.println("equal");
+            //}
+            //int pswdCompare = providedAccount[1].compareTo(accountCheckedAgainst[1]);
 
+
+            System.out.println(accPass);
+
+            //System.out.println(usrCompare);
+            //System.out.println(pswdCompare);
 
     }
 }

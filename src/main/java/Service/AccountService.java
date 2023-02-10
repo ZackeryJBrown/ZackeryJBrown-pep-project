@@ -60,20 +60,27 @@ public class AccountService {
      * @return returns the individual account including id if the username and password match
      */
     public Account loginAccount(Account account){
-        
-
+            int passLength = account.getPassword().length();
+            int userLength = account.getPassword().length();
             if ((account.getUsername()=="") ||
-                (account.getUsername().isBlank()) ||
                 (account.getUsername()==null) ||
+                (account.getPassword()==null) ||
+                (passLength == 0) ||
+                (userLength == 0) ||
+                (account.getUsername().isBlank()) ||
                 (account.getPassword()=="") ||
-                (account.getPassword().isBlank()) ||
-                (account.getPassword()==null)
-                ){              
+                (account.getPassword().isBlank()) 
+                ){
                 return null;
             }
             Account checkedAccount = accountDAO.getAccountByUsername(account.getUsername());
-            String[] providedAccount = {account.getUsername().trim(), account.getPassword().trim()};
-            String[] accountCheckedAgainst = {checkedAccount.getUsername(), checkedAccount.getPassword()};
+            
+            String accPass = account.getPassword();
+            String accUsr = account.getUsername();
+            String dbUsr = checkedAccount.getUsername();
+            String dbPass = checkedAccount.getPassword();
+            String[] providedAccount = {accUsr, accPass};
+            String[] accountCheckedAgainst = {dbUsr, dbPass};
 
             //returns 0 if matching
             int usrCompare = providedAccount[0].compareTo(accountCheckedAgainst[0]);
