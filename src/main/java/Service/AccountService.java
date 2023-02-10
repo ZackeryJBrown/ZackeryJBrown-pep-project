@@ -35,7 +35,7 @@ public class AccountService {
     public Account addAccount(Account account){
 
         //COMPLETE: logic to check if input was valid, as per use of a service class
-        try {
+        
             if ((account.getUsername() == null) ||
                 (account.getUsername() == "") ||
                 (account.password.length() <= 3) ||
@@ -48,17 +48,11 @@ public class AccountService {
                     System.out.println("Error 400: Username already created");
                     return null;
                 }
-            return null;
             }
-            
-        } catch (HttpResponseException e) {
-            //user readable response
-            System.out.println("Error code: "+e.getStatus());
-            System.out.println(e.getMessage());
-        }
-
+            return null;       
+        
         return accountDAO.insertAccount(account);
-    };
+    }
 
     /**
      * logs in an account after checking login credentials

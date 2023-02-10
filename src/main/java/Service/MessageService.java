@@ -44,8 +44,12 @@ public class MessageService {
         return messageDAO.deleteMessage(message_id);
     }
 
-    public Message editMessage(Integer message_id){
-        return messageDAO.editMessage(message_id);
+    public Message editMessage(Integer message_id, Message message){
+        return messageDAO.editMessage(message_id, message);
+    }
+
+    public List<Message> getAllFromUser(Integer account_id){
+        return messageDAO.getAllFromUser(account_id);
     }
 
 }

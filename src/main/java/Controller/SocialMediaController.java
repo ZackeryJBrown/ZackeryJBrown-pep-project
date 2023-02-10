@@ -47,10 +47,9 @@ public class SocialMediaController {
         app.post("messages", this::postMessageHandler);
         app.get("messages", this::getMessageHandler);
         app.get("messages/{message_id}", this::getMessageByIdHandler);
-        //TODO create handlers etc
         app.delete("messages/{message_id}", this::deleteMessageHandler);
         app.patch("messages/{message_id}", this::editMessageHandler);
-        //app.get("accounts/{account_id}/messages" this::getAllMessagesByUserHandler);
+        app.get("accounts/{account_id}/messages", this::getAllMessagesByUserHandler);
 
         return app;
     }
@@ -75,9 +74,9 @@ public class SocialMediaController {
         if(addedAccount != null){
             context.json(mapper.writeValueAsString(addedAccount));
             context.status(200);
-        }else{
+       }else{
             context.status(400);
-        }
+       }
     }
 
 
@@ -142,8 +141,9 @@ public class SocialMediaController {
 
     private void editMessageHandler(Context context) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
+        Message message = mapper.readValue(context.body(), Message.class);
         int message_id = mapper.readValue(context.pathParam("message_id"), Integer.class);
-        Message editedMessage = messageService.editMessage(message_id);
+        Message editedMessage = messageService.editMessage(message_id, message);
 
         if(editedMessage != null){
             context.json(mapper.writeValueAsString(editedMessage));
@@ -156,7 +156,12 @@ public class SocialMediaController {
 
     private void getAllMessagesByUserHandler(Context context) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        int message_id = mapper.readValue(context.pathParam("message_id"), Integer.class);
+        int account_id = mapper.readValue(context.pathParam("account_id"), Integer.class);
+        List<Message> allUserMessages = messageService.getAllFromUser(account_id);
+        
+        context.json(mapper.writeValueAsString(allUserMessages));
+        context.status(200);
+
         }
 
 
