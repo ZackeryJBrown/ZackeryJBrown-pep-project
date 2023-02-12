@@ -25,59 +25,11 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running AuthIntegrationTest
+Username or Password not matching. Login Failed.
 Unique index or primary key violation: "PUBLIC.CONSTRAINT_INDEX_E ON PUBLIC.ACCOUNT(USERNAME NULLS FIRST) VALUES ( /* 1 */ 'user' )"; SQL statement:
 INSERT INTO account (username, password) VALUES (?,?) [23505-214]
-[ERROR] Tests run: 7, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 8.522 s <<< FAILURE! - in AuthIntegrationTest
-[ERROR] AuthIntegrationTest.postRegisterThenPostIncorrectLoginTest  Time elapsed: 2.33 s  <<< FAILURE!
-java.lang.AssertionError: expected:<401> but was:<500>
-	at org.junit.Assert.fail(Assert.java:89)
-	at org.junit.Assert.failNotEquals(Assert.java:835)
-	at org.junit.Assert.assertEquals(Assert.java:647)
-	at org.junit.Assert.assertEquals(Assert.java:633)
-	at AuthIntegrationTest.postRegisterThenPostIncorrectLoginTest(AuthIntegrationTest.java:207)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
-	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
-	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
-	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
-	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
-	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
-	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
-	at org.junit.runners.Suite.runChild(Suite.java:128)
-	at org.junit.runners.Suite.runChild(Suite.java:27)
-	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
-	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
-	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
-	at org.apache.maven.surefire.junitcore.JUnitCore.run(JUnitCore.java:55)
-	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.createRequestAndRun(JUnitCoreWrapper.java:137)
-	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.executeEager(JUnitCoreWrapper.java:107)
-	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:83)
-	at org.apache.maven.surefire.junitcore.JUnitCoreWrapper.execute(JUnitCoreWrapper.java:75)
-	at org.apache.maven.surefire.junitcore.JUnitCoreProvider.invoke(JUnitCoreProvider.java:158)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:456)
-	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:169)
-	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
-
-[ERROR] AuthIntegrationTest.postLoginEmptyTest  Time elapsed: 1.031 s  <<< FAILURE!
+[ERROR] Tests run: 7, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 8.949 s <<< FAILURE! - in AuthIntegrationTest
+[ERROR] AuthIntegrationTest.postLoginEmptyTest  Time elapsed: 1.036 s  <<< FAILURE!
 java.lang.AssertionError: expected:<401> but was:<500>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
@@ -126,8 +78,8 @@ java.lang.AssertionError: expected:<401> but was:<500>
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
 
-[ERROR] AuthIntegrationTest.postRegisterThenPostLoginTest  Time elapsed: 1.034 s  <<< FAILURE!
-java.lang.AssertionError: expected:<200> but was:<500>
+[ERROR] AuthIntegrationTest.postRegisterThenPostLoginTest  Time elapsed: 1.031 s  <<< FAILURE!
+java.lang.AssertionError: expected:<200> but was:<401>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
 	at org.junit.Assert.assertEquals(Assert.java:647)
@@ -190,8 +142,8 @@ Column "ACCOUNT_ID" not found; SQL statement:
 SELECT * FROM message WHERE account_id = ?; [42122-214]
 Parameter "#1" is not set; SQL statement:
 SELECT * FROM message WHERE message_id = ? [90012-214]
-[ERROR] Tests run: 20, Failures: 3, Errors: 2, Skipped: 0, Time elapsed: 20.643 s <<< FAILURE! - in MessagingIntegrationTest
-[ERROR] MessagingIntegrationTest.deleteMessageNonExistentMessageTest  Time elapsed: 1.03 s  <<< FAILURE!
+[ERROR] Tests run: 20, Failures: 3, Errors: 2, Skipped: 0, Time elapsed: 20.625 s <<< FAILURE! - in MessagingIntegrationTest
+[ERROR] MessagingIntegrationTest.deleteMessageNonExistentMessageTest  Time elapsed: 1.029 s  <<< FAILURE!
 java.lang.AssertionError
 	at org.junit.Assert.fail(Assert.java:87)
 	at org.junit.Assert.assertTrue(Assert.java:42)
@@ -239,7 +191,7 @@ java.lang.AssertionError
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
 
-[ERROR] MessagingIntegrationTest.postManyAccountsAndMessagesThenGetMessagesByAccountIdTest  Time elapsed: 1.057 s  <<< FAILURE!
+[ERROR] MessagingIntegrationTest.postManyAccountsAndMessagesThenGetMessagesByAccountIdTest  Time elapsed: 1.053 s  <<< FAILURE!
 java.lang.AssertionError
 	at org.junit.Assert.fail(Assert.java:87)
 	at org.junit.Assert.assertTrue(Assert.java:42)
@@ -287,7 +239,7 @@ java.lang.AssertionError
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
 
-[ERROR] MessagingIntegrationTest.deleteMessageTest  Time elapsed: 1.036 s  <<< ERROR!
+[ERROR] MessagingIntegrationTest.deleteMessageTest  Time elapsed: 1.039 s  <<< ERROR!
 com.fasterxml.jackson.databind.exc.MismatchedInputException: 
 Cannot deserialize value of type `Model.Message` from Array value (token `JsonToken.START_ARRAY`)
  at [Source: (String)"[]"; line: 1, column: 1]
@@ -458,8 +410,7 @@ java.lang.AssertionError: expected:<400> but was:<200>
 [INFO] 
 [ERROR] Failures: 
 [ERROR]   AuthIntegrationTest.postLoginEmptyTest:161 expected:<401> but was:<500>
-[ERROR]   AuthIntegrationTest.postRegisterThenPostIncorrectLoginTest:207 expected:<401> but was:<500>
-[ERROR]   AuthIntegrationTest.postRegisterThenPostLoginTest:182 expected:<200> but was:<500>
+[ERROR]   AuthIntegrationTest.postRegisterThenPostLoginTest:182 expected:<200> but was:<401>
 [ERROR]   MessagingIntegrationTest.deleteMessageNonExistentMessageTest:393
 [ERROR]   MessagingIntegrationTest.patchMessageBlankTest:547 expected:<400> but was:<200>
 [ERROR]   MessagingIntegrationTest.postManyAccountsAndMessagesThenGetMessagesByAccountIdTest:362
@@ -469,13 +420,13 @@ java.lang.AssertionError: expected:<400> but was:<200>
 [ERROR]   MessagingIntegrationTest.deletedMessageShouldNotExistTest:426->deleteMessageTest:414 » MismatchedInput Cannot deserialize value of type `Model.Message` from Array value (token `JsonToken.START_ARRAY`)
  at [Source: (String)"[]"; line: 1, column: 1]
 [INFO] 
-[ERROR] Tests run: 27, Failures: 6, Errors: 2, Skipped: 0
+[ERROR] Tests run: 27, Failures: 5, Errors: 2, Skipped: 0
 [INFO] 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  32.923 s
-[INFO] Finished at: 2023-02-10T02:41:37Z
+[INFO] Total time:  36.182 s
+[INFO] Finished at: 2023-02-10T23:07:42Z
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M7:test (default-test) on project Challenges: There are test failures.
 [ERROR] 

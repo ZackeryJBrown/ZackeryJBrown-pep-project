@@ -3,6 +3,8 @@ import DAO.MessageDAO;
 import Model.Message;
 import Model.Account;
 import DAO.AccountDAO;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessageService {
@@ -40,16 +42,26 @@ public class MessageService {
         return messageDAO.getMessageById(message_id);
     }
 
-    public List<Message> deleteMessage(Integer message_id){
+    public Message deleteMessage(Integer message_id){
         return messageDAO.deleteMessage(message_id);
     }
 
     public Message editMessage(Integer message_id, Message message){
+        String msgTxt = message.getMessage_text();
+        if(msgTxt.isBlank()){
+            return null;
+        }
+
         return messageDAO.editMessage(message_id, message);
     }
 
     public List<Message> getAllFromUser(Integer account_id){
         return messageDAO.getAllFromUser(account_id);
+    }
+
+    public List<Message> returnEmptyList(){
+        ArrayList emptyList = new ArrayList<>();
+        return emptyList;
     }
 
 }

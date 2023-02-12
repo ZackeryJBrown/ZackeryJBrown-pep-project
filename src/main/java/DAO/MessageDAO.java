@@ -113,34 +113,23 @@ public class MessageDAO {
     }
 
 
-    public List<Message> deleteMessage(Integer message_id){
+    public Message deleteMessage(Integer message_id){
         Connection connection = ConnectionUtil.getConnection();
-        List<Message> returnedMessage = new ArrayList<>();
+        Message messageDeleted = getMessageById(message_id);
         try{
-            //prepares to return message that will be deleted
-            String returnedSql = "SELECT * FROM message WHERE message_id = ?;";
-            PreparedStatement returnedStatement = connection.prepareStatement(returnedSql);
-
-            ResultSet rs = returnedStatement.executeQuery();
-            while(rs.next()){
-                Message message = new Message(rs.getInt("message_id"),
-                                                rs.getInt("posted_by"),
-                                                rs.getString("message_text"),
-                                                rs.getLong("time_posted_epoch")
-                                            );
-                returnedMessage.add(message);
-                }
-
+            
             //deletes message
-            String sql = "DELETE FROM message WHERE message_id = ?;";
+            String sql = "DELETE FROM message WHERE message_id=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, message_id);
-            preparedStatement.executeUpdate();        
+            preparedStatement.execute();
 
+            
+            
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
-        return returnedMessage;
+        return messageDeleted;
     }
 
 
@@ -181,7 +170,7 @@ public class MessageDAO {
         List<Message> returnedMessagesFromUser = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM message WHERE account_id = ?;";
+            String sql = "SELECT * FROM message WHERE posted_by = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, account_id);
             ResultSet rs = preparedStatement.executeQuery();

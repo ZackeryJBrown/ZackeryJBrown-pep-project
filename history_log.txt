@@ -1,7 +1,7 @@
-commit a807266013e6cc8b5fee86cdadfc268f3e34fdb6
+commit 01fd81342552d95dbe37eb9b165fd621179ee26d
 Author: ZackeryJBrown <zackeryjbrown@gmail.com>
-Date:   Fri Feb 10 02:41:02 2023 +0000
+Date:   Fri Feb 10 23:07:03 2023 +0000
 
-    Logic partially fixed
+    Updates to login
 
- 5 files changed, 478 insertions(+), 134 deletions(-)
+ 7 files changed, 136 insertions(+), 811 deletions(-)

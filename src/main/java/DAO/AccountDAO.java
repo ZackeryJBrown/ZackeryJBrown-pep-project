@@ -56,6 +56,7 @@ public class AccountDAO {
             while(rs.next()){
                 return new Account(rs.getString("username"), rs.getString("password"));   
             }
+            
 
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -119,7 +120,7 @@ public class AccountDAO {
         }
         return null;
     }
-
+    
 };
 
 

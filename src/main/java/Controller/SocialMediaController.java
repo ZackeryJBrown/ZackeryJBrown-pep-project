@@ -1,7 +1,11 @@
 package Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.*;
+
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import Model.Account;
@@ -84,10 +88,8 @@ public class SocialMediaController {
         ObjectMapper mapper = new ObjectMapper();
         Account account = mapper.readValue(context.body(), Account.class);
 
-        //if(account.getUsername() = null){
-        //    context.status(401);
-        //}
-
+        
+        //registerHandler(context);
         Account loggedInAccount = accountService.loginAccount(account);
         
 
@@ -133,15 +135,21 @@ public class SocialMediaController {
         
     }
 
-
+    
     private void deleteMessageHandler(Context context) throws JsonProcessingException{
+        
+        
         ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(Include.NON_NULL);
+        mapper.setSerializationInclusion(Include.NON_EMPTY); 
+        
         int message_id = mapper.readValue(context.pathParam("message_id"), Integer.class);
-        List<Message> deletedMessage = messageService.deleteMessage(message_id);
 
+        Message deletedMessage = messageService.deleteMessage(message_id);
+        
         context.json(mapper.writeValueAsString(deletedMessage));
         context.status(200);
-
+       
     }
 
     private void editMessageHandler(Context context) throws JsonProcessingException{
@@ -156,7 +164,6 @@ public class SocialMediaController {
         }else{
             context.status(400);
         }
-
     }
 
     private void getAllMessagesByUserHandler(Context context) throws JsonProcessingException{
