@@ -2,10 +2,7 @@ package Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.core.*;
-
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import Model.Account;
@@ -13,11 +10,7 @@ import Model.Message;
 import Service.AccountService;
 import Service.MessageService;
 
-import java.net.URL;
-import java.net.http.HttpResponse;
 import java.util.List;
-
-import org.h2.util.StringUtils;
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be

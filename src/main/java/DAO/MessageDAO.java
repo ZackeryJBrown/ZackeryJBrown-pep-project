@@ -2,9 +2,6 @@ package DAO;
 
 import Model.Message;
 import Util.ConnectionUtil;
-import net.bytebuddy.dynamic.scaffold.MethodRegistry.Prepared;
-
-import java.net.http.HttpRequest;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,8 @@
 package Service;
+import java.util.List;
+
 import DAO.MessageDAO;
 import Model.Message;
-import Model.Account;
-import DAO.AccountDAO;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MessageService {
     private MessageDAO messageDAO;
@@ -23,7 +20,6 @@ public class MessageService {
         
         if( (message.getMessage_text()==null || message.getMessage_text().isBlank()) ||
             (message.getMessage_text().length() >= 255) ||
-            //TODO check if possible to pull and compare all existing users from account table to message poster
             ( !(message.getPosted_by()>= 0) )
             ){
             return null;
@@ -59,9 +55,6 @@ public class MessageService {
         return messageDAO.getAllFromUser(account_id);
     }
 
-    public List<Message> returnEmptyList(){
-        ArrayList emptyList = new ArrayList<>();
-        return emptyList;
-    }
+    
 
 }
