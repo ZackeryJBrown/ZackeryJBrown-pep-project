@@ -62,10 +62,12 @@ public class AccountService {
     public Account loginAccount(Account account){
             int passLength = account.getPassword().length();
             int userLength = account.getPassword().length();
-            if ((account.getUsername()=="") ||
-                (account.getUsername()==null) ||
-                (account.getPassword()==null) ||
-                (passLength == 0) ||
+
+            if (
+            (account.getUsername()==null) ||
+            (account.getPassword()==null) ||
+            (account.getUsername()=="") ||    
+            (passLength == 0) ||
                 (userLength == 0) ||
                 (account.getUsername().isBlank()) ||
                 (account.getPassword()=="") ||
@@ -75,6 +77,10 @@ public class AccountService {
             }
             Account checkedAccount = accountDAO.getAccountByUsername(account.getUsername());
             
+            if(checkedAccount == null){
+                return null;
+            }
+
             String accPass = account.getPassword();
             String accUsr = account.getUsername();
             String dbUsr = checkedAccount.getUsername();
@@ -83,8 +89,8 @@ public class AccountService {
             String[] accountCheckedAgainst = {dbUsr, dbPass};
 
             //returns 0 if matching
-            int usrCompare = providedAccount[0].compareTo(accountCheckedAgainst[0]);
-            int pswdCompare = providedAccount[1].compareTo(accountCheckedAgainst[1]);
+            int usrCompare = accUsr.compareTo(dbUsr);
+            int pswdCompare = accPass.compareTo(dbPass);
                                
             //if password or username are not matching, return null
             if (usrCompare != 0 || pswdCompare != 0){
@@ -92,9 +98,9 @@ public class AccountService {
                 return null;
             }
             
-        
-        return null;
-    }
+            
+            return accountDAO.loginAccount(account);
+        }
     
 
 }

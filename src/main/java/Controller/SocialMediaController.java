@@ -129,9 +129,10 @@ public class SocialMediaController {
         int message_id = mapper.readValue(context.pathParam("message_id"), Integer.class);
         Message messageById = messageService.getMessageById(message_id);
 
-        
+        if(messageById != null){
         context.json(mapper.writeValueAsString(messageById));
         context.status(200);
+        }
         
     }
 
@@ -146,9 +147,10 @@ public class SocialMediaController {
         int message_id = mapper.readValue(context.pathParam("message_id"), Integer.class);
 
         Message deletedMessage = messageService.deleteMessage(message_id);
-        
+        if (deletedMessage != null){
         context.json(mapper.writeValueAsString(deletedMessage));
         context.status(200);
+        }
        
     }
 

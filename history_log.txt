@@ -1,7 +1,7 @@
-commit 01fd81342552d95dbe37eb9b165fd621179ee26d
+commit 5896de1706e05bab0f9ab5929e665f269ced14f1
 Author: ZackeryJBrown <zackeryjbrown@gmail.com>
-Date:   Fri Feb 10 23:07:03 2023 +0000
+Date:   Sun Feb 12 00:39:52 2023 +0000
 
-    Updates to login
+    Bug fixes
 
- 7 files changed, 136 insertions(+), 811 deletions(-)
+ 7 files changed, 58 insertions(+), 97 deletions(-)
